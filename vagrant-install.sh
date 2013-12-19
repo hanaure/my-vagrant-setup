@@ -35,7 +35,7 @@ dpkg-reconfigure -f noninteractive tzdata > /dev/null 2>&1
 # ------------------------
 #  Update and basic tools
 # ------------------------
-echo '- Updating apt-get repositories'
+echo '- Updating repositories'
 apt-get update > /dev/null 2>&1
 
 echo '- Installing vim'
@@ -47,13 +47,13 @@ apt-get install -y vim > /dev/null 2>&1
 echo '- Installing python-software-properties'
 apt-get install -y python-software-properties > /dev/null 2>&1
 
-echo '- Adding PHP 5.4 PPA'
+echo '- Adding PHP 5.5 PPA'
 add-apt-repository ppa:ondrej/php5 > /dev/null 2>&1
 
-echo '- Updating apt-get repositories'
+echo '- Updating repositories'
 apt-get update > /dev/null 2>&1
 
-echo '- Installing PHP 5.4'
+echo '- Installing PHP 5.5'
 apt-get install -y php5 > /dev/null 2>&1
 
 echo '- Installing required PHP modules for Laravel 4'
@@ -97,9 +97,13 @@ apt-get -q -y install mysql-server > /dev/null 2>&1
 echo '- Configuring MySQL settings'
 echo "CREATE DATABASE IF NOT EXISTS $database" | mysql
 echo "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password'" | mysql
-echo "GRANT ALL PRIVILEGES ON $database.* TO '$username'@'localhost' IDENTIFIED BY '$password'" | mysql
+echo "GRANT ALL PRIVILEGES ON *.* TO '$username'@'%' IDENTIFIED BY '$password'" | mysql
+echo "FLUSH PRIVILEGES" | mysql
 
-echo '- Refreshing services'
+echo '- Binding MySQL address'
+sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/my.cnf > /dev/null 2>&1
+
+echo '- Refreshing all services'
 service apache2 restart > /dev/null 2>&1
 service mysql restart > /dev/null 2>&1
 
@@ -108,7 +112,7 @@ echo ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 echo '                 Bootstrapping done!'
 echo ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
 echo ''
-echo ' Your development enviroment is done'
+echo ' Your development environment is done'
 echo ' Now you should migrate and seed your database'
 echo ''
 echo ' Hope you enjoy it!'
