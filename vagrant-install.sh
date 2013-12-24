@@ -97,6 +97,8 @@ apt-get -q -y install mysql-server > /dev/null 2>&1
 echo '- Configuring MySQL settings'
 echo "CREATE DATABASE IF NOT EXISTS $database" | mysql
 echo "CREATE USER '$username'@'localhost' IDENTIFIED BY '$password'" | mysql
+echo "GRANT ALL PRIVILEGES ON *.* TO '$username'@'localhost' IDENTIFIED BY '$password'" | mysql
+echo "CREATE USER '$username'@'%' IDENTIFIED BY '$password'" | mysql
 echo "GRANT ALL PRIVILEGES ON *.* TO '$username'@'%' IDENTIFIED BY '$password'" | mysql
 echo "FLUSH PRIVILEGES" | mysql
 
