@@ -1,4 +1,4 @@
-# My personal Vagrant Setup
+# My Personal Vagrant Setup
 
 A basic Ubuntu 12.04 Vagrant setup with PHP 5.5 and MySQL 5.5.
 PHP 5.4 w/ Apache 2.2 is available on the php54 branch.
@@ -29,7 +29,7 @@ Some basic information on interacting with the vagrant box
 
 * 80 - Apache
 
-### Default MySQL/PostgreSQL Database
+### Default MySQL Database
 
 * User: vagrant
 * Password: vagrant
@@ -44,15 +44,14 @@ Vagrant is [very well documented](http://vagrantup.com/v1/docs/index.html) but h
 * `vagrant halt` attempts a graceful shutdown of the machine and will need to be brought back with `vagrant up`
 * `vagrant ssh` gives you shell access to the virtual machine
 
-----
-##### Virtual Machine Specifications #####
+### Virtual Machine Specifications
 
 * OS     - Ubuntu 12.04
 * Apache - 2.4.6
 * PHP    - 5.5.4
 * MySQL  - 5.5.3
 
-### Thanks for
+## Thanks to
 
 * @andrew13
 * @bryannielsen
