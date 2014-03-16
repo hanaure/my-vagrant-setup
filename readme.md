@@ -28,6 +28,7 @@ Some basic information on interacting with the vagrant box
 ### Port Forwards
 
 * 80 - Apache
+* 3306 - MySQL
 
 ### Default MySQL Database
 
@@ -35,7 +36,7 @@ Some basic information on interacting with the vagrant box
 * Password: vagrant
 * DB Name: vagrant
 
-### Vagrant
+## Vagrant
 
 Vagrant is [very well documented](http://vagrantup.com/v1/docs/index.html) but here are a few common commands:
 
@@ -44,7 +45,7 @@ Vagrant is [very well documented](http://vagrantup.com/v1/docs/index.html) but h
 * `vagrant halt` attempts a graceful shutdown of the machine and will need to be brought back with `vagrant up`
 * `vagrant ssh` gives you shell access to the virtual machine
 
-### Virtual Machine Specifications
+## Virtual Machine Specifications
 
 * OS     - Ubuntu 12.04
 * Apache - 2.4.6
