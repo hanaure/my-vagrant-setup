@@ -43,7 +43,7 @@ apt-get install -y vim > /dev/null 2>&1
 
 # ---------
 #  PHP 5.4
-# ---------	
+# ---------    
 echo '- Installing python-software-properties'
 apt-get install -y python-software-properties > /dev/null 2>&1
 
@@ -84,6 +84,9 @@ sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf > /de
 echo '- Setting up shared files'
 rm -rf /var/www > /dev/null 2>&1
 ln -fs /vagrant/www /var/www > /dev/null 2>&1
+
+echo '- Setting up default site'
+sed -i "s/DocumentRoot .*/DocumentRoot \/var\/www/" /etc/apache2/sites-available/000-default.conf > /dev/null 2>&1
 
 # -----------
 #  MySQL 5.5
