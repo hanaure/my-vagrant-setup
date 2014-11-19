@@ -52,14 +52,15 @@ apt-get install -y vim > /dev/null 2>&1
 # ---------
 #  PHP 5.4
 # ---------    
+echo '- Installing python-software-properties'
+apt-get install -y python-software-properties > /dev/null 2>&1
+
 echo '- Adding PHP 5.5 PPA'
-add-apt-repository ppa:ondrej/php5 > /dev/null 2>&1
+add-apt-repository ppa:ondrej/php5-oldstable > /dev/null 2>&1
 
 echo '- Updating repositories'
 apt-get update --fix-missing > /dev/null 2>&1
-
-echo '- Installing python-software-properties'
-apt-get install -y python-software-properties > /dev/null 2>&1
+apt-get upgrade > /dev/null 2>&1
 
 echo '- Installing PHP 5.5'
 apt-get install -y php5 > /dev/null 2>&1
