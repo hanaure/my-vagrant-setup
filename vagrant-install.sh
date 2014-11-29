@@ -88,14 +88,14 @@ echo '- Enabling Apache 2 mod_rewrite'
 a2enmod rewrite > /dev/null 2>&1
 
 echo '- Making apache allow override .htaccess files'
-sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf > /dev/null 2>&1
+sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/sites-available/default > /dev/null 2>&1
 
 echo '- Setting up shared files'
 rm -rf /var/www > /dev/null 2>&1
-ln -fs /vagrant/www /var/www > /dev/null 2>&1
+ln -fs /vagrant/public /var/www > /dev/null 2>&1
 
 echo '- Setting up default site'
-sed -i "s/DocumentRoot .*/DocumentRoot \/var\/www/" /etc/apache2/sites-available/000-default.conf > /dev/null 2>&1
+sed -i "s/DocumentRoot .*/DocumentRoot \/var\/www/" /etc/apache2/sites-available/default > /dev/null 2>&1
 
 # -----------
 #  MySQL 5.5
