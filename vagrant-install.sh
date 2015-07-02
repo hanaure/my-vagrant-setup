@@ -24,7 +24,7 @@ echo ''
 echo '- Setting up Google public DNS'
 echo "nameserver 8.8.8.8" >> /etc/resolvconf/resolv.conf.d/base
 echo "nameserver 8.8.4.4" >> /etc/resolvconf/resolv.conf.d/base
-resolvconf -u > /dev/null 2>&1
+resolvconf -u
 
 # ---------------
 #  Various fixes
@@ -37,14 +37,14 @@ export LC_ALL=en_US.UTF-8
 dpkg-reconfigure locales > /dev/null 2>&1
 
 echo '- Configuring timezone to Brazil/East'
-echo "Brazil/East" > /etc/timezone > /dev/null 2>&1
+echo "Brazil/East" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata > /dev/null 2>&1
 
 # ------------------------
 #  Update and basic tools
 # ------------------------
 echo '- Updating repositories'
-apt-get update > /dev/null 2>&1
+apt-get update -y > /dev/null 2>&1
 
 echo '- Installing vim'
 apt-get install -y vim > /dev/null 2>&1
@@ -52,18 +52,20 @@ apt-get install -y vim > /dev/null 2>&1
 # ---------
 #  PHP 5.4
 # ---------    
-echo '- Installing python-software-properties'
-apt-get install -y python-software-properties > /dev/null 2>&1
-
 echo '- Adding PHP 5.5 PPA'
-add-apt-repository ppa:ondrej/php5-oldstable > /dev/null 2>&1
+add-apt-repository -y ppa:ondrej/php5-5.6
 
 echo '- Updating repositories'
-apt-get update --fix-missing > /dev/null 2>&1
-apt-get upgrade > /dev/null 2>&1
+apt-get update -y
+
+echo '- Installing python-software-properties'
+apt-get install -y python-software-properties
+
+echo '- Updating repositories'
+apt-get update -y
 
 echo '- Installing PHP 5.5'
-apt-get install -y php5 > /dev/null 2>&1
+apt-get install -y php5
 
 echo '- Installing required PHP modules for Laravel 4'
 apt-get install -y php5-mcrypt php5-gd php5-mysql php5-curl > /dev/null 2>&1
@@ -85,14 +87,14 @@ echo '- Installing Apache 2'
 apt-get install -y apache2 > /dev/null 2>&1
 
 echo '- Enabling Apache 2 mod_rewrite'
-a2enmod rewrite > /dev/null 2>&1
+a2enmod rewrite
 
 echo '- Making apache allow override .htaccess files'
 sed -i 's/AllowOverride None/AllowOverride All/' /etc/apache2/sites-available/default > /dev/null 2>&1
 
 echo '- Setting up shared files'
-rm -rf /var/www > /dev/null 2>&1
-ln -fs /vagrant/public /var/www > /dev/null 2>&1
+rm -rf /var/www
+ln -fs /vagrant/public /var/www
 
 echo '- Setting up default site'
 sed -i "s/DocumentRoot .*/DocumentRoot \/var\/www/" /etc/apache2/sites-available/default > /dev/null 2>&1
@@ -120,6 +122,17 @@ sed -i 's/127.0.0.1/0.0.0.0/' /etc/mysql/my.cnf > /dev/null 2>&1
 echo '- Refreshing all services'
 service apache2 restart > /dev/null 2>&1
 service mysql restart > /dev/null 2>&1
+
+echo '- Setting up composer'
+wget getcomposer.org/installer > /dev/null 2>&1
+php installer > /dev/null 2>&1
+mv composer.phar /usr/bin/composer > /dev/null 2>&1
+
+echo '- Rebuild PHP - Temporary workaround'
+apt-get -y update > /dev/null 2>&1
+add-apt-repository -y ppa:ondrej/php5-5.6 > /dev/null 2>&1
+apt-get -y update > /dev/null 2>&1
+apt-get -y install php5 php5-mhash php5-mcrypt php5-curl php5-cli php5-mysql php5-gd php5-intl php5-xsl > /dev/null 2>&1
 
 echo ''
 echo ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
