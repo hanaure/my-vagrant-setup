@@ -23,7 +23,7 @@ For example: `chmod -R 777 www/app/storage/`
 
 ## Usage
 
-Some basic information on interacting with the vagrant box
+Some basic information on interacting with the vagrant box:
 
 ### Port Forwards
 
